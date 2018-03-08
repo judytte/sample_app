@@ -6,10 +6,6 @@
 	<%= javascript_include_tag "application" %>
 	<%= csrf_meta_tags %>
 	<%= render 'layouts/shim' %>
-	<!-- [if lt IE9]>
-		<scipt src="http://html5shim.googlecode.com/svn/trunk/html5.js"</script>
-			OR https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js ¿?¿?
-	<![endif] -->
 </head>
 <body>
 	<%= render 'layouts/header' %>
@@ -17,24 +13,5 @@
 		<%= yield %>
 		<%= render 'layouts/footer' %>
 	</div>
-	<!--
-	<header class="navbar navbar-fixed-top">
-		<div class="navbar-inner">
-			<div class="container">
-			  <%= link_to "sample app", '#', id: "logo" %>
-				<nav>
-					<ul class="nav pull-right">
-						<li><%=link_to "Home", '#' %></li>
-						<li><%=link_to "Help", '#' %></li>
-						<li><%=link_to "Sign in", '#' %></li>
-					</ul>
-				</nav>
-			</div>
-		</div>
-	</header>
-	<div class="container">
-		<%= yield %>
-	</div>
--->
 </body>
 </html>
