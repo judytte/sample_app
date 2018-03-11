@@ -45,6 +45,8 @@ end
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platform: :mri
+  #Añadido. explicación pagina 229
+  gem 'annotate', '~> 2.7.2'
 end
 
 group :development do

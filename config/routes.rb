@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  get 'users/new'
+
   #get 'users/new'
 
  	match 'static_pages/home' => 'home', :via => [:get], :as => 'root'
