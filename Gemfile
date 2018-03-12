@@ -10,6 +10,8 @@ end
 gem 'rails', '~> 5.0.6'
 # Add 5.1.2 pag 175
 gem 'bootstrap-sass', '3.3.7'
+#Add 6.3.1 pag 255
+gem 'bcrypt-ruby', '3.1.5'
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3'
 gem 'rspec-rails', '>=3.7.2'
