@@ -42,6 +42,9 @@ gem 'jbuilder', '~> 2.5'
 
 group :test do
 	gem 'capybara', '>=2.18.0'
+	#Añadido en la pagina 284
+	gem 'factory_girl_rails', '4.9.0'
+  gem 'factory_girl', '4.9.0'
 end
 
 group :development, :test do

@@ -1,13 +1,14 @@
 Rails.application.routes.draw do
 
-  get 'users/new'
+  resources :users
 
-  #get 'users/new'
+  #match '/Path' => 'Controller#Path', :via => [:get], :as => 'Helper _pat
+  #match '/test1(.:format)' => 'test2#test1', :via => [:get], :as => 'test3_path'
+ 	match 'home' => 'static_pages', :via => [:get], :as => 'root'
 
- 	match 'static_pages/home' => 'home', :via => [:get], :as => 'root'
-  	match 'static_pages/help' => 'help', :via => [:get], :as => 'help'
-	match 'static_pages/about' => 'about', :via => [:get], :as => 'about'
-	match 'static_pages/contact' => 'contact', :via => [:get], :as => 'contact'
-	match 'users/new' => 'signup', :via => [:get], :as => 'signup'
-
+ 	#get 'Path/Helper', to: 'Controller#Path'
+	get  '/help',    	to: 'static_pages#help'
+	get  '/about',   	to: 'static_pages#about'
+	get  '/contact',	to: 'static_pages#contact'
+	get  '/signup',  	to: 'users#new'
 end

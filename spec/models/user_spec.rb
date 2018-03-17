@@ -1,113 +1,69 @@
-# == Schema Information
-#
-# Table name: users
-#
-#  id         :integer          not null, primary key
-#  name       :string
-#  email      :string
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
-#
-
+#Da error, se ha modificado por rails_helper
+#require 'test_helper'
 require 'rails_helper'
 
-#RSpec.describe User, type: :model do
- # pending "add some examples to (or delete) #{__FILE__}"
+class UserTest < ActiveSupport::TestCase
 
-#Añadido. explicación pagina 237
-describe User do
-	before do 
-		@user = User.new(name: "Example User", email: "user@example.com",
-						password: "foobar", password_confirmation: "foobar")
+  def setup
+    @user = User.new(name: "Example User", email: "user@example.com",
+    	                     password: "foobar", password_confirmation: "foobar")
+  end
+
+  test "should be valid" do
+    assert @user.valid?
+  end
+    test "name should be present" do
+    @user.name = "     "
+    assert_not @user.valid?
+  end
+  test "email should be present" do
+    @user.email = "     "
+    assert_not @user.valid?
+  end
+    test "name should not be too long" do
+    @user.name = "a" * 51
+    assert_not @user.valid?
+  end
+  test "email should not be too long" do
+    @user.email = "a" * 244 + "@example.com"
+    assert_not @user.valid?
+  end
+    test "email validation should accept valid addresses" do
+    valid_addresses = %w[user@example.com USER@foo.COM A_US-ER@foo.bar.org
+                         first.last@foo.jp alice+bob@baz.cn]
+    valid_addresses.each do |valid_address|
+      @user.email = valid_address
+      assert @user.valid?, "#{valid_address.inspect} should be valid"
+    end
+  end
+    test "email validation should reject invalid addresses" do
+    invalid_addresses = %w[user@example,com user_at_foo.org user.name@example.
+                           foo@bar_baz.com foo@bar+baz.com]
+      invalid_addresses.each do |invalid_address|
+        @user.email = invalid_address
+        assert_not @user.valid?, "#{invalid_address.inspect} should be invalid"
+      end
 	end
+      test "email addresses should be unique" do
+    duplicate_user = @user.dup
+    duplicate_user.email = @user.email.upcase
+    @user.save
+    assert_not duplicate_user.valid?
+  end
+  test "email addresses should be saved as lower-case" do
+    mixed_case_email = "Foo@ExAMPle.CoM"
+    @user.email = mixed_case_email
+    @user.save
+    assert_equal mixed_case_email.downcase, @user.reload.email
+  end
+  test "password should be present (nonblank)" do
+    @user.password = @user.password_confirmation = " " * 6
+    assert_not @user.valid?
+  end
 
-	subject { @user}
+  test "password should have a minimum length" do
+    @user.password = @user.password_confirmation = "a" * 5
+    assert_not @user.valid?
+  end
 
-	it { should respond_to(:name)}
-	it { should respond_to(:email)}
-	it { should respond_to(:password_digest)}
-	it { should respond_to(:password)}
-	it { should respond_to(:password_confirmation)}
-	it { should respond_to (:authenticate)}
-
-	it { should be_valid}
-
-	describe "when name is not present" do
-		before { @user.name = " " }
-		it { should_not be_valid }
-	end
-
-	describe "when email is not present" do
-		before { @user.email = " " }
-		it { should_not be_valid }
-	end
-
-	describe "when name is too long" do
-		before { @user.name = "a" * 51 }
-		it { should_not be_valid }
-	end
-
-	describe "when email format is invalid" do
-		it "should be invalid" do
-			addresses = %w[user@foo.com user_at_foo.org example.user@foo.foo@bar_baz.com foo@bar+baz.com]
-			addresses.each do |invalid_address|
-				@user.email = invalid_address@user.should_not be_valid
-			end
-		end
-	end
-
-	describe "when email format is valid" do
-		it "should be valid" do
-			addresses = %w[user@foo.COM A_US-ER@f.b.org frst.lst@foo.jp a+b@baz.cn]
-			addresses.each do |valid_address|
-			@user.email = valid_address
-			@user.should be_valid
-			end
-		end
-	end
-
-	describe "when email address is already taken" do
-		before do
-			user_with_same_email = @user.dup
-			user_with_same_email.save
-		end
-
-		it { should_not be_valid }
-	end
-
-	describe "when password is not present" do
-		before { @user.password = @user.password_confirmation = " " }
-		it { should_not be_valid }
-	end
-
-	describe "when password doesn't match confirmation" do
-		before { @user.password_confirmation = "mismatch" }
-		it { should_not be_valid}
-	end
-
-	describe "when password confirmation is nil" do
-		before { @user.password_confirmation = nil }
-		it { should_not be_valid }
-	end
-
-	describe "with a password that's too short" do
-		before { @user.password = @user.password_confirmation = "a" * 5 }
-		it { should be_invalid }
-	end
-
-	describe "return value of authenticate method" do
-		before { @user.save }
-		let(:found_user) {User.find_by_email(@user.email) }
-
-		describe "with valid password" do
-			it { should == found_user.authenticate(@user.password) }
-		end
-
-		describe "with invalid password" do
-			let(:user_for_invalid_password) { found_user.authenticate("invalid") }
-
-			it { should_not == user_for_invalid_password }
-			specify { user_for_invalid_password.should be_false }
-		end
-	end
 end
