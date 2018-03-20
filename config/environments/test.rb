@@ -41,8 +41,9 @@ Rails.application.configure do
   # config.action_view.raise_on_missing_translations = true
 
   #Añadido pagina 286
-  require 'bcrypt'
-  silence_warnings do
-    BCrypt::Engine:DEFAULT_COST == BCrypt::Engine::MIN_COST
-  end
+  #require 'bcrypt'
+  #silence_warnings do
+    #BCrypt::Engine:DEFAULT_COST == BCrypt::Engine::MIN_COST
+  #dona error per Engine
+  #end
 end

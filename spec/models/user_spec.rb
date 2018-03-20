@@ -1,12 +1,12 @@
-#Da error, se ha modificado por rails_helper
-#require 'test_helper'
 require 'rails_helper'
+require 'spec_helper'
 
 class UserTest < ActiveSupport::TestCase
 
   def setup
     @user = User.new(name: "Example User", email: "user@example.com",
-    	                     password: "foobar", password_confirmation: "foobar")
+    	                     password: "foobar", password_confirmation: "foobar", 
+                           remember_token:"")
   end
 
   test "should be valid" do
@@ -64,6 +64,61 @@ class UserTest < ActiveSupport::TestCase
   test "password should have a minimum length" do
     @user.password = @user.password_confirmation = "a" * 5
     assert_not @user.valid?
+  end
+
+  #TEST pag345 dona error ¡!
+  test "sigin with invalid information" do
+    get signin_path
+    assert_template 'sessions/new'
+    post signin_path, params: { session: { email: "", password: "" } }
+    assert_template 'sessions/new'
+    assert_not flash.empty?
+    get root_path
+    assert flash.empty?
+  end
+
+  test "sigin with remembering" do
+    sig_in_as(@user, remember_me: '1')
+    assert_not_empty cookies['remember_token']
+  end
+
+  test "sigin without remembering" do
+    # Sigin to set the cookie.
+    sig_in_as(@user, remember_me: '1')
+    # Sigin again and verify that the cookie is deleted.
+    sig_in_as(@user, remember_me: '0')
+    assert_empty cookies['remember_token']
+  end
+  test "signin with valid information followed by signout" do
+    get signin_path
+    post signin_path, params: { session: { email:    @user.email,
+                                          password: 'password' } }
+    assert is_signed_in?
+    assert_redirected_to @user
+    follow_redirect!
+    assert_template 'users/show'
+    assert_select "a[href=?]", signin_path, count: 0
+    assert_select "a[href=?]", signout_path
+    assert_select "a[href=?]", user_path(@user)
+    delete signout_path
+    assert_not is_signed_in?
+    assert_redirected_to root_url
+    # Simulate a user clicking sigout in a second window.
+    delete signout_path
+    follow_redirect!
+    assert_select "a[href=?]", signin_path
+    assert_select "a[href=?]", signout_path,      count: 0
+    assert_select "a[href=?]", user_path(@user), count: 0
+  end
+  
+  test "should not allow the admin attribute to be edited via the web" do
+    log_in_as(@other_user)
+    assert_not @other_user.admin?
+    patch user_path(@other_user), params: {
+                                    user: { password:              FILL_IN,
+                                            password_confirmation: FILL_IN,
+                                            admin: FILL_IN } }
+    assert_not @other_user.FILL_IN.admin?
   end
 
 end

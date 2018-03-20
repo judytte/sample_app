@@ -35,4 +35,5 @@ describe "static pages" do
 		it should have_selector('title',
 				:text => "Ruby on Rails Tutorial Sample App | Contact")
 	end
+
 end

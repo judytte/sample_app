@@ -1,8 +1,8 @@
 # SQLite version 3.x
-#   gem install sqlite3
+   #gem install sqlite3
 #
 #   Ensure the SQLite 3 gem is defined in your Gemfile
-#   gem 'sqlite3'
+   #gem 'sqlite3'
 #
 default: &default
   adapter: sqlite3
@@ -23,3 +23,31 @@ test:
 production:
   <<: *default
   database: db/production.sqlite3
+
+#------------------------------------------------------------------
+#Modificado porque Heroku no es comatible con sqlite si co npostgresql
+#No funciona, pide host usuername and password
+#development:
+#  adapter: postgresql
+#  database: my_database_development
+#  pool: 5
+#  timeout: 5000
+#      username:  <%= ENV['USERNAME'] %>
+#      password:  <%= ENV['PASSWORD'] %>
+#      host:     <%= ENV['IP'] %>
+
+#test:
+#  adapter: postgresql
+#  database: my_database_test
+#  pool: 5
+#  timeout: 5000
+#    host:  <%=ENV['IP']%>
+
+#production:
+#  adapter: postgresql
+#  database: my_database_production
+#  pool: 5
+#  timeout: 5000
+#    host:  <%=ENV['IP']%>
+
+

@@ -12,9 +12,18 @@ gem 'rails', '~> 5.0.6'
 gem 'bootstrap-sass', '3.3.7'
 #Add 6.3.1 pag 255
 gem 'bcrypt-ruby', '3.1.5'
+#Add 9.3.2 pag 4.3
+gem 'faker', '1.8.7'
+#Add 9.3.3. pag 405
+gem 'will_paginate', '3.1.6'
+gem 'bootstrap-will_paginate', '1.0.0'
 # Use sqlite3 as the database for Active Record
+    #No es compatible con Heroku, se ha cambiado a Postgresql
+    #Más información en: https://devcenter.heroku.com/articles/sqlite3
 gem 'sqlite3'
-gem 'rspec-rails', '>=3.7.2'
+    #gem 'pg'
+
+gem 'rspec-rails'
 # Use Puma as the app server
 gem 'puma', '~> 3.0'
 # Use SCSS for stylesheets
@@ -43,8 +52,9 @@ gem 'jbuilder', '~> 2.5'
 group :test do
 	gem 'capybara', '>=2.18.0'
 	#Añadido en la pagina 284
-	gem 'factory_girl_rails', '4.9.0'
-  gem 'factory_girl', '4.9.0'
+	#gem 'factory_girl_rails', '4.9.0'
+  #gem 'factory_girl', '4.9.0'
+  gem 'factory_bot'
 end
 
 group :development, :test do
