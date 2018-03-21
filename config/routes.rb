@@ -2,6 +2,7 @@ Rails.application.routes.draw do
 
   resources :users
   resources :sessions, only: [:new, :create, :destroy]
+  resources :microposts, only: [:create, :destroy]
 
   #match '/Path' => 'Controller#Path', :via => [:get], :as => 'Helper _pat
   #match '/test1(.:format)' => 'test2#test1', :via => [:get], :as => 'test3_path'

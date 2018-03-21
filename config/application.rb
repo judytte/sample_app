@@ -11,5 +11,8 @@ module SampleApp
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
+
+	#Add 10.1.3 pag 436
+    #config.active_record.whitelist_attributes = true da error
   end
 end
