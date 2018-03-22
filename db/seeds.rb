@@ -2,9 +2,9 @@ User.create!(name:  "Example User",
              email: "example@railstutorial.org",
              password:              "foobar",
              password_confirmation: "foobar",
-             admin:     true#,
-             #activated: true,
-             #activated_at: Time.zone.now
+             admin:     true,
+             activated: true,
+             activated_at: Time.zone.now
              )
 
 99.times do |n|
@@ -14,9 +14,9 @@ User.create!(name:  "Example User",
   User.create!(name:  name,
                email: email,
                password:              password,
-               password_confirmation: password#,
-               #activated: true,
-               #activated_at: Time.zone.now
+               password_confirmation: password,
+               activated: true,
+               activated_at: Time.zone.now
                )
 end
 
@@ -30,7 +30,7 @@ end
 # Following relationships
 users = User.all
 user  = users.first
-#following = users[2..50]
-#followers = users[3..40]
-#following.each { |followed| user.follow(followed) }
-#followers.each { |follower| follower.follow(user) }
+following = users[2..50]
+followers = users[3..40]
+following.each { |followed| user.follow(followed) }#ERROR
+followers.each { |follower| follower.follow(user) }
