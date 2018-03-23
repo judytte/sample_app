@@ -7,7 +7,6 @@ Rails.application.routes.draw do
   #LLIBRE
   resources :users
   resources :sessions, only: [:new, :create, :destroy]
-  resources :microposts, only: [:create, :destroy]
   resources :relationships, only: [:create, :destroy]
 
   #match '/Path' => 'Controller#Path', :via => [:get], :as => 'Helper _pat

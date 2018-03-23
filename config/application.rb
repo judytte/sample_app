@@ -14,5 +14,8 @@ module SampleApp
 
 	#Add 10.1.3 pag 436
     #config.active_record.whitelist_attributes = true da error
+
+    # Version online.  Include the authenticity token in remote forms.
+    config.action_view.embed_authenticity_token_in_remote_forms = true
   end
 end
